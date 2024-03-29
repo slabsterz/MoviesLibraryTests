@@ -68,17 +68,14 @@ namespace MoviesLibraryAPI.Tests
         {
             // Arrange
             var invalidMovie = new Movie
-            {
-                // Provide an invalid movie object, for example, missing required fields like 'Title'
-                // Assuming 'Title' is a required field, do not set it
+            {            
                 Title = "Random title",
                 Director = "Random director",
                 YearReleased = 2001,
                 Genre = "Action"               
             };
 
-            // Act and Assert
-            // Expect a ValidationException because the movie is missing a required field
+            // Act and Assert           
             var exception = Assert.ThrowsAsync<ValidationException>(() => _controller.AddAsync(invalidMovie));
         }
 
@@ -101,8 +98,7 @@ namespace MoviesLibraryAPI.Tests
             await _controller.DeleteAsync(movie.Title);
             var result = await _dbContext.Movies.Find(x => x.Title == movie.Title).FirstOrDefaultAsync();
 
-            // Assert
-            // The movie should no longer exist in the database
+            // Assert          
             Assert.IsNull(result);
         }
 
@@ -251,7 +247,7 @@ namespace MoviesLibraryAPI.Tests
             var result = await _controller.SearchByTitleFragmentAsync("tax");
             var foundMovie = result.FirstOrDefault();
 
-            // Assert // Should return one matching movie
+            // Assert 
             Assert.NotNull(result);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(firstMovie.Title, foundMovie.Title);
@@ -300,12 +296,9 @@ namespace MoviesLibraryAPI.Tests
         [Test]
         public async Task UpdateAsync_WhenInvalidMovieProvided_ShouldThrowValidationException()
         {
-            // Arrange
-            // Movie without required fields
+            // Arrange           
             var invalidMovie = new Movie
-            {
-                // Provide an invalid movie object, for example, missing required fields like 'Title'
-                // Assuming 'Title' is a required field, do not set it
+            {               
                 Title = "Random title",
                 Director = "Random director",
                 YearReleased = 2001,
